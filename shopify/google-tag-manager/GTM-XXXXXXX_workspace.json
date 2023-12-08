@@ -1,0 +1,2198 @@
+{
+    "exportFormatVersion": 2,
+    "exportTime": "2023-12-08 00:04:00",
+    "containerVersion": {
+        "path": "accounts/1000000000/containers/10000000/versions/0",
+        "accountId": "1000000000",
+        "containerId": "10000000",
+        "containerVersionId": "0",
+        "container": {
+            "path": "accounts/1000000000/containers/10000000",
+            "accountId": "1000000000",
+            "containerId": "10000000",
+            "name": "www.dimebeautyco.com",
+            "publicId": "GTM-XXXXXXX",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1624318238458",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/1000000000/containers/10000000/workspaces?apiLink=container",
+            "features": {
+                "supportUserPermissions": true,
+                "supportEnvironments": true,
+                "supportWorkspaces": true,
+                "supportGtagConfigs": false,
+                "supportBuiltInVariables": true,
+                "supportClients": false,
+                "supportFolders": true,
+                "supportTags": true,
+                "supportTemplates": true,
+                "supportTriggers": true,
+                "supportVariables": true,
+                "supportVersions": true,
+                "supportZones": true,
+                "supportTransformations": false
+            },
+            "tagIds": [
+                "GTM-XXXXXXX"
+            ]
+        },
+        "tag": [
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "114",
+                "name": "Google Tag",
+                "type": "googtag",
+                "notes": "Here, we disable the default page view event and leave a separate GA4 event to handle the page view.\n\nMore information:\nhttps://developers.google.com/analytics/devguides/collection/ga4/views?client_type=gtm",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "{{Google - Tag ID}}"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "configSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "send_page_view"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "false"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701228856885",
+                "firingTriggerId": [
+                    "2147479553"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "126",
+                "name": "GA4 event - add_to_cart",
+                "type": "gaawe",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/product_added_to_cart\n\nGoogle documentation:\nhttps://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#add_to_cart",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "userProperties",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "currency"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{dataLayer - currency}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "value"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{dataLayer - total_cost}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "name",
+                                        "value": "items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "value",
+                                        "value": "{{dataLayer - cart_items}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "add_to_cart"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Google - Tag ID}}"
+                    }
+                ],
+                "fingerprint": "1701365766290",
+                "firingTriggerId": [
+                    "120"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "134",
+                "name": "GA4 event - page_view",
+                "type": "gaawe",
+                "notes": "Shopify pixels are loaded within a \"sanbox\" - an `<iframe />` element which has limited access to data. \nBecause of this, the \"page location\" (the current URL) cannot be automatically detected and needs to be provided manually.\n\nShopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/page_viewed\n\nGoogle documentation:\nhttps://developers.google.com/analytics/devguides/collection/ga4/views",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_location"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - page_location}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_title"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - page_title}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "page_view"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Google - Tag ID}}"
+                    }
+                ],
+                "fingerprint": "1701362043105",
+                "firingTriggerId": [
+                    "122"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "143",
+                "name": "GA4 event - view_item_list",
+                "type": "gaawe",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/collection_viewed\n\nGoogle documentation:\nhttps://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#view_item_list",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "item_list_id"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - collection_id}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "item_list_name"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - collection_title}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - collection_items}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "view_item_list"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Google - Tag ID}}"
+                    }
+                ],
+                "fingerprint": "1701367667859",
+                "firingTriggerId": [
+                    "125"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "144",
+                "name": "GA4 event - view_item",
+                "type": "gaawe",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/product_viewed\n\nGoogle documentation:\nhttps://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#view_item",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "page_location"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - page_location}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "product_id"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - product_id}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "product_title"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - product_title}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "product_sku"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - product_sku}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "currency"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - currency}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "value"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - value}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - product_items}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "view_item"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Google - Tag ID}}"
+                    }
+                ],
+                "fingerprint": "1701367614628",
+                "firingTriggerId": [
+                    "123"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "145",
+                "name": "GA4 event - begin_checkout",
+                "type": "gaawe",
+                "notes": "Shopify event:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_started\n\nGA4 event:\nhttps://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#begin_checkout",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "transaction_id"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - orderId}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "currency"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - currency}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "tax"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - tax}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "value"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - value}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "coupon"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - coupons}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - checkout_items}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "begin_checkout"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Google - Tag ID}}"
+                    }
+                ],
+                "fingerprint": "1701365824066",
+                "firingTriggerId": [
+                    "119"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "156",
+                "name": "GA4 event - purchase",
+                "type": "gaawe",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_completed\n\nGoogle documentation:\nhttps://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#purchase",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "currency"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - currency}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "transaction_id"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - orderId}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "value"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - value}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "coupon"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - coupons}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "shipping"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - shipping}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "tax"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - tax}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - checkout_items}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "purchase"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Google - Tag ID}}"
+                    }
+                ],
+                "fingerprint": "1701366093559",
+                "firingTriggerId": [
+                    "115"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "157",
+                "name": "GA4 event - add_payment_info",
+                "type": "gaawe",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/payment_info_submitted\n\nGoogle documentation:\nhttps://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#add_payment_info",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "currency"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - currency}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "value"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - value}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "coupon"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - coupons}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - checkout_items}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "add_payment_info"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Google - Tag ID}}"
+                    }
+                ],
+                "fingerprint": "1701365423879",
+                "firingTriggerId": [
+                    "116"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "158",
+                "name": "GA4 event - add_shipping_info",
+                "type": "gaawe",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_shipping_info_submitted\n\nGoogle documentation:\nhttps://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#add_shipping_info",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "currency"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - currency}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "value"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - value}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "coupon"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - coupons}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - checkout_items}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "add_shipping_info"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Google - Tag ID}}"
+                    }
+                ],
+                "fingerprint": "1701365678618",
+                "firingTriggerId": [
+                    "154"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "159",
+                "name": "GA4 event - view_cart",
+                "type": "gaawe",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/cart_viewed\n\nGoogle documentation:\nhttps://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#view_cart",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "currency"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - currency}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "value"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - total_cost}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - cart_items}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "view_cart"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Google - Tag ID}}"
+                    }
+                ],
+                "fingerprint": "1701366857931",
+                "firingTriggerId": [
+                    "121"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "tagId": "160",
+                "name": "GA4 event - search",
+                "type": "gaawe",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/search_submitted\n\nGoogle documentation:\nhttps://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#search",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "search_term"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{dataLayer - search_query}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "search"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{Google - Tag ID}}"
+                    }
+                ],
+                "fingerprint": "1701382759058",
+                "firingTriggerId": [
+                    "124"
+                ],
+                "parentFolderId": "113",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            }
+        ],
+        "trigger": [
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "115",
+                "name": "dataLayer event - checkout_completed",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "checkout_completed"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701362650793",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_completed"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "116",
+                "name": "dataLayer event - payment_info_submitted",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "payment_info_submitted"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701362984915",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/payment_info_submitted"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "117",
+                "name": "dataLayer event - checkout_address_info_submitted",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "checkout_address_info_submitted"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701362633019",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_address_info_submitted"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "118",
+                "name": "dataLayer event - checkout_contact_info_submitted",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "checkout_contact_info_submitted"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701362679469",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_contact_info_submitted"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "119",
+                "name": "dataLayer event - checkout_started",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "checkout_started"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701362708174",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_started"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "120",
+                "name": "dataLayer event - product_added_to_cart",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "product_added_to_cart"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701363022957",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/product_added_to_cart"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "121",
+                "name": "dataLayer event - cart_viewed",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "cart_viewed"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701364334214",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/cart_viewed"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "122",
+                "name": "dataLayer event - page_viewed",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "page_viewed"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701362964743",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/page_viewed"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "123",
+                "name": "dataLayer event - product_viewed",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "product_viewed"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701363080775",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/product_viewed"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "124",
+                "name": "dataLayer event - search_submitted",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "search_submitted"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701363102185",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/search_submitted"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "125",
+                "name": "dataLayer event - collection_viewed",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "collection_viewed"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701362943301",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/collection_viewed"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "154",
+                "name": "dataLayer event - checkout_shipping_info_submitted",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "checkout_shipping_info_submitted"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701363379549",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_shipping_info_submitted"
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "triggerId": "155",
+                "name": "dataLayer event - product_removed_from_cart",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "product_removed_from_cart"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1701363391720",
+                "parentFolderId": "113",
+                "notes": "Shopify documentation:\nhttps://shopify.dev/docs/api/web-pixels-api/standard-events/product_removed_from_cart"
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "111",
+                "name": "Google - Tag ID",
+                "type": "c",
+                "notes": "This is the \"Google Tag\" ID, which is a single tag that collects data for multiple Google products.\n\nFor more information:\nhttps://developers.google.com/tag-platform/gtagjs",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "G-XXXXXXXXXX"
+                    }
+                ],
+                "fingerprint": "1701211438002",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "112",
+                "name": "Google - Analytics Property ID",
+                "type": "c",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "XXXXXXXXX"
+                    }
+                ],
+                "fingerprint": "1701210915189",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "127",
+                "name": "dataLayer - price",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "price"
+                    }
+                ],
+                "fingerprint": "1701212984784",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "128",
+                "name": "dataLayer - currency",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "currency"
+                    }
+                ],
+                "fingerprint": "1701212965697",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "129",
+                "name": "dataLayer - product_title",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "product_title"
+                    }
+                ],
+                "fingerprint": "1701362395977",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "130",
+                "name": "dataLayer - quantity",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "quantity"
+                    }
+                ],
+                "fingerprint": "1701212952638",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "131",
+                "name": "dataLayer - total_cost",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "total_cost"
+                    }
+                ],
+                "fingerprint": "1701362449479",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "132",
+                "name": "dataLayer - page_location",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "page_location"
+                    }
+                ],
+                "fingerprint": "1701362360796",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "133",
+                "name": "dataLayer - page_title",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "page_title"
+                    }
+                ],
+                "fingerprint": "1701362367883",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "135",
+                "name": "dataLayer - event_id",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "event_id"
+                    }
+                ],
+                "fingerprint": "1701362436437",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "136",
+                "name": "dataLayer - orderId",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "orderId"
+                    }
+                ],
+                "fingerprint": "1701362351722",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "137",
+                "name": "dataLayer - cart_id",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "cart_id"
+                    }
+                ],
+                "fingerprint": "1701362422287",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "138",
+                "name": "dataLayer - product_id",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "product_id"
+                    }
+                ],
+                "fingerprint": "1701362380067",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "139",
+                "name": "dataLayer - product_sku",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "product_sku"
+                    }
+                ],
+                "fingerprint": "1701362388896",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "140",
+                "name": "dataLayer - search_query",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "search_query"
+                    }
+                ],
+                "fingerprint": "1701362405709",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "141",
+                "name": "dataLayer - collection_id",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "collection_id"
+                    }
+                ],
+                "fingerprint": "1701362323799",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "142",
+                "name": "dataLayer - collection_title",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "collection_title"
+                    }
+                ],
+                "fingerprint": "1701362339687",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "146",
+                "name": "dataLayer - subtotal",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "subtotal"
+                    }
+                ],
+                "fingerprint": "1701223848541",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "147",
+                "name": "dataLayer - shipping",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "shipping"
+                    }
+                ],
+                "fingerprint": "1701223752396",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "148",
+                "name": "dataLayer - value",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "value"
+                    }
+                ],
+                "fingerprint": "1701223776337",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "149",
+                "name": "dataLayer - tax",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "tax"
+                    }
+                ],
+                "fingerprint": "1701223792340",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "150",
+                "name": "dataLayer - checkout_items",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "checkout_items"
+                    }
+                ],
+                "fingerprint": "1701362301761",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "151",
+                "name": "dataLayer - coupons",
+                "type": "v",
+                "notes": "Comma-separated list of coupon code titles",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "coupons"
+                    }
+                ],
+                "fingerprint": "1701226727347",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "152",
+                "name": "dataLayer - collection_items",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "collection_items"
+                    }
+                ],
+                "fingerprint": "1701362331596",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "153",
+                "name": "dataLayer - cart_items",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "cart_items"
+                    }
+                ],
+                "fingerprint": "1701362294877",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "161",
+                "name": "dataLayer - product_items",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "product_items"
+                    }
+                ],
+                "fingerprint": "1701367437832",
+                "parentFolderId": "113",
+                "formatValue": {}
+            },
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "variableId": "162",
+                "name": "dataLayer - checkout_item_skus",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "checkout_item_skus"
+                    }
+                ],
+                "fingerprint": "1701371870667",
+                "parentFolderId": "113",
+                "formatValue": {}
+            }
+        ],
+        "folder": [
+            {
+                "accountId": "1000000000",
+                "containerId": "10000000",
+                "folderId": "113",
+                "name": "Shopify - GA4",
+                "fingerprint": "1701212402006"
+            }
+        ],
+        "fingerprint": "1701993840606",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/1000000000/containers/10000000/versions/0?apiLink=version"
+    }
+}
