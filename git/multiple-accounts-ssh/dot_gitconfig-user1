@@ -1,0 +1,8 @@
+[user]
+	signingkey = ssh-ed25519 AAABBBCCC...
+	name = user1
+	email = user1@example.com
+
+[url "git@github.user1:user1"]
+	insteadOf = git@github.com:user1
+

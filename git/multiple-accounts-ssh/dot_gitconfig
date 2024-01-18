@@ -1,0 +1,8 @@
+; First Account
+[includeIf "hasconfig:remote.*.url:*github.com*user1/*"]
+	path = ~/.gitconfig-user1
+
+; Second account
+[includeIf "hasconfig:remote.*.url:*github.com*user2/*"]
+	path = ~/.gitconfig-user2
+
