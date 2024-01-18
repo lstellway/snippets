@@ -56,7 +56,7 @@ var shopifyCheckoutLineItemToGA4Item = function (item, index) {
  * @param variant ProductVariant
  * @returns GA4Item
  */
-var productVariantToGA4Item = function(variant) {
+var productVariantToGA4Item = function (variant) {
     return {
         item_id: variant.product.id,
         item_name: variant.product.title,
@@ -92,15 +92,15 @@ var shopifyCollectionToGA4Items = function (collection) {
  * @param cartLine CartLine
  * @return GA4Item
  */
-var shopifyCartLineToGA4Item = function(cartLine) {
-  return {
-    item_id: cartLine.merchandise.product.id,
-    item_name: cartLine.merchandise.product.title,
-    item_brand: cartLine.merchandise.product.vendor,
-    item_variant: cartLine.merchandise.title,
-    price: cartLine.cost.totalAmount.amount,
-    quantity: cartLine.quantity,
-  };
+var shopifyCartLineToGA4Item = function (cartLine) {
+    return {
+        item_id: cartLine.merchandise.product.id,
+        item_name: cartLine.merchandise.product.title,
+        item_brand: cartLine.merchandise.product.vendor,
+        item_variant: cartLine.merchandise.title,
+        price: cartLine.cost.totalAmount.amount,
+        quantity: cartLine.quantity,
+    };
 };
 
 /**
@@ -119,227 +119,255 @@ var commaSeparatedDiscountTitles = function (discountApplications) {
 /**
  * Subscribe to events
  */
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_completed
 analytics.subscribe("checkout_completed", (event) => {
+    var checkout = event.data.checkout || {};
+    var shippingAddress = checkout.shippingAddress || {};
+
     window.dataLayer.push({
         event: "checkout_completed",
         timestamp: event.timestamp,
         event_id: event.id,
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
-        token: event.data.checkout.token,
+        token: checkout.token || "",
         client_id: event.clientId,
-        email: event.data.checkout.email,
-        phone: event.data.checkout.phone,
-        first_name: event.data.checkout.shippingAddress.firstName,
-        last_name: event.data.checkout.shippingAddress.lastName,
-        address1: event.data.checkout.shippingAddress.address1,
-        address2: event.data.checkout.shippingAddress.address2,
-        city: event.data.checkout.shippingAddress.city,
-        country: event.data.checkout.shippingAddress.country,
-        countryCode: event.data.checkout.shippingAddress.countryCode,
-        province: event.data.checkout.shippingAddress.province,
-        provinceCode: event.data.checkout.shippingAddress.provinceCode,
-        zip: event.data.checkout.shippingAddress.zip,
-        orderId: event.data.checkout.order.id,
-        checkout_item_skus: event.data.checkout.lineItems.map(function(item) {
-            return item.variant.sku;
-        }).join(","),
-        checkout_items: event.data.checkout.lineItems.map(
+        email: checkout.email || "",
+        phone: checkout.phone || "",
+        first_name: shippingAddress.firstName || "",
+        last_name: shippingAddress.lastName || "",
+        address1: shippingAddress.address1 || "",
+        address2: shippingAddress.address2 || "",
+        city: shippingAddress.city || "",
+        country: shippingAddress.country || "",
+        countryCode: shippingAddress.countryCode || "",
+        province: shippingAddress.province || "",
+        provinceCode: shippingAddress.provinceCode || "",
+        zip: shippingAddress.zip || "",
+        orderId: checkout.order.id,
+        checkout_item_skus: (checkout.lineItems || [])
+            .map(function (item) {
+                return item.variant.sku;
+            })
+            .join(","),
+        checkout_items: (checkout.lineItems || []).map(
             shopifyCheckoutLineItemToGA4Item
         ),
         coupons: commaSeparatedDiscountTitles(
-            event.data.checkout.discountApplications
+            checkout.discountApplications || []
         ),
-        currency: event.data.checkout.currencyCode,
-        subtotal: event.data.checkout.subtotalPrice.amount,
-        shipping: event.data.checkout.shippingLine.price.amount,
-        value: event.data.checkout.totalPrice.amount,
-        tax: event.data.checkout.totalTax.amount,
+        currency: checkout.currencyCode,
+        subtotal: checkout.subtotalPrice.amount,
+        shipping: checkout.shippingLine.price.amount,
+        value: checkout.totalPrice.amount,
+        tax: checkout.totalTax.amount,
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/payment_info_submitted
 analytics.subscribe("payment_info_submitted", (event) => {
+    var checkout = event.data.checkout || {};
+    var shippingAddress = checkout.shippingAddress || {};
+
     window.dataLayer.push({
         event: "payment_info_submitted",
         timestamp: event.timestamp,
         event_id: event.id,
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
-        token: event.data.checkout.token,
+        token: checkout.token || "",
         client_id: event.clientId,
-        email: event.data.checkout.email,
-        phone: event.data.checkout.phone,
-        first_name: event.data.checkout.shippingAddress.firstName,
-        last_name: event.data.checkout.shippingAddress.lastName,
-        address1: event.data.checkout.shippingAddress.address1,
-        address2: event.data.checkout.shippingAddress.address2,
-        city: event.data.checkout.shippingAddress.city,
-        country: event.data.checkout.shippingAddress.country,
-        countryCode: event.data.checkout.shippingAddress.countryCode,
-        province: event.data.checkout.shippingAddress.province,
-        provinceCode: event.data.checkout.shippingAddress.provinceCode,
-        zip: event.data.checkout.shippingAddress.zip,
-        orderId: event.data.checkout.order.id,
+        email: checkout.email || "",
+        phone: checkout.phone || "",
+        first_name: shippingAddress.firstName || "",
+        last_name: shippingAddress.lastName || "",
+        address1: shippingAddress.address1 || "",
+        address2: shippingAddress.address2 || "",
+        city: shippingAddress.city || "",
+        country: shippingAddress.country || "",
+        countryCode: shippingAddress.countryCode || "",
+        province: shippingAddress.province || "",
+        provinceCode: shippingAddress.provinceCode || "",
+        zip: shippingAddress.zip || "",
+        orderId: checkout.order.id || "",
         coupons: commaSeparatedDiscountTitles(
-            event.data.checkout.discountApplications
+            checkout.discountApplications || []
         ),
-        checkout_items: event.data.checkout.lineItems.map(
+        checkout_items: (checkout.lineItems || []).map(
             shopifyCheckoutLineItemToGA4Item
         ),
-        currency: event.data.checkout.currencyCode,
-        subtotal: event.data.checkout.subtotalPrice.amount,
-        shipping: event.data.checkout.shippingLine.price.amount,
-        value: event.data.checkout.totalPrice.amount,
-        tax: event.data.checkout.totalTax.amount,
+        currency: checkout.currencyCode || "",
+        subtotal: checkout.subtotalPrice.amount,
+        shipping: checkout.shippingLine.price.amount,
+        value: checkout.totalPrice.amount,
+        tax: checkout.totalTax.amount,
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_shipping_info_submitted
 analytics.subscribe("checkout_shipping_info_submitted", (event) => {
+    var checkout = event.data.checkout || {};
+    var shippingAddress = checkout.shippingAddress || {};
+
     window.dataLayer.push({
         event: "checkout_shipping_info_submitted",
         timestamp: event.timestamp,
         event_id: event.id,
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
-        token: event.data.checkout.token,
+        token: checkout.token,
         client_id: event.clientId,
-        email: event.data.checkout.email,
-        phone: event.data.checkout.phone,
-        first_name: event.data.checkout.shippingAddress.firstName,
-        last_name: event.data.checkout.shippingAddress.lastName,
-        address1: event.data.checkout.shippingAddress.address1,
-        address2: event.data.checkout.shippingAddress.address2,
-        city: event.data.checkout.shippingAddress.city,
-        country: event.data.checkout.shippingAddress.country,
-        countryCode: event.data.checkout.shippingAddress.countryCode,
-        province: event.data.checkout.shippingAddress.province,
-        provinceCode: event.data.checkout.shippingAddress.provinceCode,
-        zip: event.data.checkout.shippingAddress.zip,
-        orderId: event.data.checkout.order.id,
-        checkout_items: event.data.checkout.lineItems.map(
+        email: checkout.email || "",
+        phone: checkout.phone || "",
+        first_name: shippingAddress.firstName || "",
+        last_name: shippingAddress.lastName || "",
+        address1: shippingAddress.address1 || "",
+        address2: shippingAddress.address2 || "",
+        city: shippingAddress.city || "",
+        country: shippingAddress.country || "",
+        countryCode: shippingAddress.countryCode || "",
+        province: shippingAddress.province || "",
+        provinceCode: shippingAddress.provinceCode || "",
+        zip: shippingAddress.zip || "",
+        orderId: checkout.order.id,
+        checkout_items: (checkout.lineItems || []).map(
             shopifyCheckoutLineItemToGA4Item
         ),
         coupons: commaSeparatedDiscountTitles(
-            event.data.checkout.discountApplications
+            checkout.discountApplications || []
         ),
-        currency: event.data.checkout.currencyCode,
-        subtotal: event.data.checkout.subtotalPrice.amount,
-        shipping: event.data.checkout.shippingLine.price.amount,
-        value: event.data.checkout.totalPrice.amount,
-        tax: event.data.checkout.totalTax.amount,
+        currency: checkout.currencyCode || "",
+        subtotal: checkout.subtotalPrice.amount,
+        shipping: checkout.shippingLine.price.amount,
+        value: checkout.totalPrice.amount,
+        tax: checkout.totalTax.amount,
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_address_info_submitted
 analytics.subscribe("checkout_address_info_submitted", (event) => {
-    console.log({ event_name: "checkout_address_info_submitted", event });
+    var checkout = event.data.checkout || {};
+    var shippingAddress = checkout.shippingAddress || {};
+
     window.dataLayer.push({
         event: "checkout_address_info_submitted",
         timestamp: event.timestamp,
         event_id: event.id,
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
-        token: event.data.checkout.token,
+        token: checkout.token || "",
         client_id: event.clientId,
-        email: event.data.checkout.email,
-        phone: event.data.checkout.phone,
-        first_name: event.data.checkout.shippingAddress.firstName,
-        last_name: event.data.checkout.shippingAddress.lastName,
-        address1: event.data.checkout.shippingAddress.address1,
-        address2: event.data.checkout.shippingAddress.address2,
-        city: event.data.checkout.shippingAddress.city,
-        country: event.data.checkout.shippingAddress.country,
-        countryCode: event.data.checkout.shippingAddress.countryCode,
-        province: event.data.checkout.shippingAddress.province,
-        provinceCode: event.data.checkout.shippingAddress.provinceCode,
-        zip: event.data.checkout.shippingAddress.zip,
-        orderId: event.data.checkout.order.id,
-        checkout_items: event.data.checkout.lineItems.map(
+        email: checkout.email || "",
+        phone: checkout.phone || "",
+        first_name: shippingAddress.firstName || "",
+        last_name: shippingAddress.lastName || "",
+        address1: shippingAddress.address1 || "",
+        address2: shippingAddress.address2 || "",
+        city: shippingAddress.city || "",
+        country: shippingAddress.country || "",
+        countryCode: shippingAddress.countryCode || "",
+        province: shippingAddress.province || "",
+        provinceCode: shippingAddress.provinceCode || "",
+        zip: shippingAddress.zip || "",
+        orderId: checkout.order.id,
+        checkout_items: (checkout.lineItems || []).map(
             shopifyCheckoutLineItemToGA4Item
         ),
         coupons: commaSeparatedDiscountTitles(
-            event.data.checkout.discountApplications
+            checkout.discountApplications || []
         ),
-        currency: event.data.checkout.currencyCode,
-        subtotal: event.data.checkout.subtotalPrice.amount,
-        shipping: event.data.checkout.shippingLine.price.amount,
-        value: event.data.checkout.totalPrice.amount,
-        tax: event.data.checkout.totalTax.amount,
+        currency: checkout.currencyCode || "",
+        subtotal: checkout.subtotalPrice.amount,
+        shipping: checkout.shippingLine.price.amount,
+        value: checkout.totalPrice.amount,
+        tax: checkout.totalTax.amount,
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_contact_info_submitted
 analytics.subscribe("checkout_contact_info_submitted", (event) => {
+    var checkout = event.data.checkout || {};
+    var shippingAddress = checkout.shippingAddress || {};
+
     window.dataLayer.push({
         event: "checkout_contact_info_submitted",
         timestamp: event.timestamp,
         event_id: event.id,
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
-        token: event.data.checkout.token,
+        token: checkout.token || "",
         client_id: event.clientId,
-        email: event.data.checkout.email,
-        phone: event.data.checkout.phone,
-        first_name: event.data.checkout.shippingAddress.firstName,
-        last_name: event.data.checkout.shippingAddress.lastName,
-        address1: event.data.checkout.shippingAddress.address1,
-        address2: event.data.checkout.shippingAddress.address2,
-        city: event.data.checkout.shippingAddress.city,
-        country: event.data.checkout.shippingAddress.country,
-        countryCode: event.data.checkout.shippingAddress.countryCode,
-        province: event.data.checkout.shippingAddress.province,
-        provinceCode: event.data.checkout.shippingAddress.provinceCode,
-        zip: event.data.checkout.shippingAddress.zip,
-        orderId: event.data.checkout.order.id,
-        checkout_items: event.data.checkout.lineItems.map(
+        email: checkout.email || "",
+        phone: checkout.phone || "",
+        first_name: shippingAddress.firstName || "",
+        last_name: shippingAddress.lastName || "",
+        address1: shippingAddress.address1 || "",
+        address2: shippingAddress.address2 || "",
+        city: shippingAddress.city || "",
+        country: shippingAddress.country || "",
+        countryCode: shippingAddress.countryCode || "",
+        province: shippingAddress.province || "",
+        provinceCode: shippingAddress.provinceCode || "",
+        zip: shippingAddress.zip || "",
+        orderId: checkout.order.id,
+        checkout_items: (checkout.lineItems || []).map(
             shopifyCheckoutLineItemToGA4Item
         ),
         coupons: commaSeparatedDiscountTitles(
-            event.data.checkout.discountApplications
+            checkout.discountApplications || []
         ),
-        currency: event.data.checkout.currencyCode,
-        subtotal: event.data.checkout.subtotalPrice.amount,
-        shipping: event.data.checkout.shippingLine.price.amount,
-        value: event.data.checkout.totalPrice.amount,
-        tax: event.data.checkout.totalTax.amount,
+        currency: checkout.currencyCode || "",
+        subtotal: checkout.subtotalPrice.amount,
+        shipping: checkout.shippingLine.price.amount,
+        value: checkout.totalPrice.amount,
+        tax: checkout.totalTax.amount,
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/checkout_started
 analytics.subscribe("checkout_started", (event) => {
+    var checkout = event.data.checkout || {};
+    var shippingAddress = checkout.shippingAddress || {};
+
     window.dataLayer.push({
         event: "checkout_started",
         timestamp: event.timestamp,
         event_id: event.id,
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
-        token: event.data.checkout.token,
+        token: checkout.token || "",
         client_id: event.clientId,
-        email: event.data.checkout.email,
-        phone: event.data.checkout.phone,
-        first_name: event.data.checkout.shippingAddress.firstName,
-        last_name: event.data.checkout.shippingAddress.lastName,
-        address1: event.data.checkout.shippingAddress.address1,
-        address2: event.data.checkout.shippingAddress.address2,
-        city: event.data.checkout.shippingAddress.city,
-        country: event.data.checkout.shippingAddress.country,
-        countryCode: event.data.checkout.shippingAddress.countryCode,
-        province: event.data.checkout.shippingAddress.province,
-        provinceCode: event.data.checkout.shippingAddress.provinceCode,
-        zip: event.data.checkout.shippingAddress.zip,
-        orderId: event.data.checkout.order.id,
-        checkout_items: event.data.checkout.lineItems.map(
+        email: checkout.email || "",
+        phone: checkout.phone || "",
+        first_name: shippingAddress.firstName || "",
+        last_name: shippingAddress.lastName || "",
+        address1: shippingAddress.address1 || "",
+        address2: shippingAddress.address2 || "",
+        city: shippingAddress.city || "",
+        country: shippingAddress.country || "",
+        countryCode: shippingAddress.countryCode || "",
+        province: shippingAddress.province || "",
+        provinceCode: shippingAddress.provinceCode || "",
+        zip: shippingAddress.zip || "",
+        orderId: checkout.order.id,
+        checkout_items: (checkout.lineItems || []).map(
             shopifyCheckoutLineItemToGA4Item
         ),
         coupons: commaSeparatedDiscountTitles(
-            event.data.checkout.discountApplications
+            checkout.discountApplications || []
         ),
-        currency: event.data.checkout.currencyCode,
-        subtotal: event.data.checkout.subtotalPrice.amount,
-        shipping: event.data.checkout.shippingLine.price.amount,
-        value: event.data.checkout.totalPrice.amount,
-        tax: event.data.checkout.totalTax.amount,
+        currency: checkout.currencyCode || "",
+        subtotal: checkout.subtotalPrice.amount,
+        shipping: checkout.shippingLine.price.amount,
+        value: checkout.totalPrice.amount,
+        tax: checkout.totalTax.amount,
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/product_added_to_cart
 analytics.subscribe("product_added_to_cart", (event) => {
+    var cartLine = event.data.cartLine || {};
+
     window.dataLayer.push({
         event: "product_added_to_cart",
         timestamp: event.timestamp,
@@ -347,16 +375,19 @@ analytics.subscribe("product_added_to_cart", (event) => {
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
         client_id: event.clientId,
-        price: event.data.cartLine.merchandise.price.amount,
-        currency: event.data.cartLine.cost.totalAmount.currencyCode,
-        total_cost: event.data.cartLine.cost.totalAmount.amount,
-        product_title: event.data.cartLine.merchandise.product.title,
-        quantity: event.data.cartLine.quantity,
-        cart_items: [shopifyCartLineToGA4Item(event.data.cartLine)],
+        price: cartLine.merchandise.price.amount,
+        currency: cartLine.cost.totalAmount.currencyCode,
+        total_cost: cartLine.cost.totalAmount.amount,
+        product_title: cartLine.merchandise.product.title,
+        quantity: cartLine.quantity,
+        cart_items: [shopifyCartLineToGA4Item(cartLine)],
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/cart_viewed
 analytics.subscribe("cart_viewed", (event) => {
+    var cart = event.data.cart || {};
+
     window.dataLayer.push({
         event: "cart_viewed",
         timestamp: event.timestamp,
@@ -364,14 +395,15 @@ analytics.subscribe("cart_viewed", (event) => {
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
         client_id: event.clientId,
-        currency: event.data.cart.cost.totalAmount.currencyCode,
-        total_cost: event.data.cart.cost.totalAmount.amount,
-        quantity: event.data.cart.totalQuantity,
-        cart_id: event.data.cart.id,
-        cart_items: event.data.cart.lines.map(shopifyCartLineToGA4Item),
+        currency: cart.cost.totalAmount.currencyCode,
+        total_cost: cart.cost.totalAmount.amount,
+        quantity: cart.totalQuantity,
+        cart_id: cart.id,
+        cart_items: cart.lines.map(shopifyCartLineToGA4Item),
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/page_viewed
 analytics.subscribe("page_viewed", (event) => {
     window.dataLayer.push({
         event: "page_viewed",
@@ -383,7 +415,10 @@ analytics.subscribe("page_viewed", (event) => {
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/product_viewed
 analytics.subscribe("product_viewed", (event) => {
+    var productVariant = event.data.productVariant || {};
+
     window.dataLayer.push({
         event: "product_viewed",
         timestamp: event.timestamp,
@@ -391,16 +426,19 @@ analytics.subscribe("product_viewed", (event) => {
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
         client_id: event.clientId,
-        product_id: event.data.productVariant.product.id,
-        product_title: event.data.productVariant.title,
-        product_sku: event.data.productVariant.sku,
-        value: event.data.productVariant.price.amount,
-        currency: event.data.productVariant.price.currencyCode,
-        product_items: [productVariantToGA4Item(event.data.productVariant)],
+        product_id: productVariant.product.id,
+        product_title: productVariant.title,
+        product_sku: productVariant.sku,
+        value: productVariant.price.amount,
+        currency: productVariant.price.currencyCode,
+        product_items: [productVariantToGA4Item(productVariant)],
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/search_submitted
 analytics.subscribe("search_submitted", (event) => {
+    var searchResult = event.data.searchResult || {};
+
     window.dataLayer.push({
         event: "search_submitted",
         timestamp: event.timestamp,
@@ -408,11 +446,14 @@ analytics.subscribe("search_submitted", (event) => {
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
         client_id: event.clientId,
-        search_query: event.data.searchResult.query,
+        search_query: searchResult.query,
     });
 });
 
+// @see https://shopify.dev/docs/api/web-pixels-api/standard-events/collection_viewed
 analytics.subscribe("collection_viewed", (event) => {
+    var collection = event.data.collection || {};
+
     window.dataLayer.push({
         event: "collection_viewed",
         timestamp: event.timestamp,
@@ -420,9 +461,8 @@ analytics.subscribe("collection_viewed", (event) => {
         page_location: event.context.window.location.href,
         page_title: event.context.document.title,
         client_id: event.clientId,
-        collection_id: event.data.collection.id,
-        collection_title: event.data.collection.title,
-        collection_items: shopifyCollectionToGA4Items(event.data.collection),
+        collection_id: collection.id,
+        collection_title: collection.title,
+        collection_items: shopifyCollectionToGA4Items(collection),
     });
 });
-
